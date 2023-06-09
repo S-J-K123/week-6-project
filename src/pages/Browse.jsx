@@ -12,21 +12,18 @@ import { useParams } from "react-router-dom";
 const Browse = () => {
   const [showModal, setShowModal] = useState(false);
   const [users, setUsers] = useState([]);
-  const { id } = useParams()
-  const [searchId, setSearchId] = useState(id)
+  const { id } = useParams();
+  const [searchId, setSearchId] = useState("");
 
-
-function onSearch() {
- fetchUsers(searchId)
-}
-
-
+  function onSearch() {
+    fetchUsers(searchId);
+  }
 
   async function fetchUsers(userId) {
     const { data } = await axios.get(
-      `https://www.omdbapi.com/?i=tt3896198&apikey=8e3ddd4c&s=${userId || id}`
-      // https://www.omdbapi.com/?i=tt3896198&apikey=8e3ddd4c&s=fast
-      // https://www.omdbapi.com/?i=tt3896198&apikey=8e3ddd4c
+      `https://www.omdbapi.com/?apikey=8e3ddd4c&s=${userId || id}`
+      // "https://www.omdbapi.com/?apikey=8e3ddd4c&s=fast"
+      
     );
     setUsers(data.Search);
     console.log(data);
@@ -72,7 +69,9 @@ function onSearch() {
 
         <div className="search-container-browse bg-orange">
           <form action="" className="bg-orange">
-            <input value={searchId} onChange={(event) => setSearchId(event.target.value) }
+            <input
+              value={searchId}
+              onChange={(event) => setSearchId(event.target.value)}
               className="browse-input"
               type="text"
               placeholder="Search thousands of movies..."
