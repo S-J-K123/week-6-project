@@ -7,14 +7,26 @@ import Switch from "../components/Switch";
 import Modal from "../components/Modal";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useParams } from "react-router-dom";
 
 const Browse = () => {
   const [showModal, setShowModal] = useState(false);
   const [users, setUsers] = useState([]);
+  const { id } = useParams()
+  const [searchId, setSearchId] = useState(id)
 
-  async function fetchUsers() {
+
+function onSearch() {
+ fetchUsers(searchId)
+}
+
+
+
+  async function fetchUsers(userId) {
     const { data } = await axios.get(
-      "https://www.omdbapi.com/?i=tt3896198&apikey=8e3ddd4c&s=fast"
+      `https://www.omdbapi.com/?i=tt3896198&apikey=8e3ddd4c&s=${userId || id}`
+      // https://www.omdbapi.com/?i=tt3896198&apikey=8e3ddd4c&s=fast
+      // https://www.omdbapi.com/?i=tt3896198&apikey=8e3ddd4c
     );
     setUsers(data.Search);
     console.log(data);
@@ -60,15 +72,13 @@ const Browse = () => {
 
         <div className="search-container-browse bg-orange">
           <form action="" className="bg-orange">
-            <input onChange={(event) => {
-                console.log(event.target.value)
-            }}
+            <input value={searchId} onChange={(event) => setSearchId(event.target.value) }
               className="browse-input"
               type="text"
               placeholder="Search thousands of movies..."
               name="Search"
             />
-            <button className="button-browse">
+            <button onClick={() => onSearch()} className="button-browse">
               <FontAwesomeIcon
                 className="magnify-browse"
                 icon={faMagnifyingGlass}
