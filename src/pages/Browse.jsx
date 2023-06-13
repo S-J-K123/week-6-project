@@ -13,7 +13,7 @@ const Browse = () => {
   const [showModal, setShowModal] = useState(false);
   const [users, setUsers] = useState([]);
   const { id } = useParams();
-  const [searchName, setSearchName] = useState(id);
+  const [searchName, setSearchName] = useState(id || '');
 
   function onSearch() {
     fetchUsers(searchName);
