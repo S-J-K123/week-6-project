@@ -21,9 +21,7 @@ const Browse = () => {
 
   async function fetchUsers(userId) {
     const { data } = await axios.get(
-      `https://www.omdbapi.com/?apikey=8e3ddd4c&s=${userId || id}`
-      // "https://www.omdbapi.com/?apikey=8e3ddd4c&s=fast"
-      
+      `https://www.omdbapi.com/?i=tt3896198&apikey=8e3ddd4c&s=${userId || id}`
     );
     setUsers(data.Search);
     console.log(data);
@@ -98,9 +96,9 @@ const Browse = () => {
 
       {showModal ? <Modal /> : null}
 
-      {users.map((user) => {
+      {users.map((user, id) => {
         return (
-          <div className="row">
+          <div className="row" key={id}>
             <div className="user-list">
               <div className="user">
                 <div className="user-card">
