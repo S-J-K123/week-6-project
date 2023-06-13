@@ -13,19 +13,23 @@ const Browse = () => {
   const [showModal, setShowModal] = useState(false);
   const [users, setUsers] = useState([]);
   const { id } = useParams();
-  const [searchId, setSearchId] = useState("");
+  const [searchName, setSearchName] = useState(id);
 
   function onSearch() {
-    fetchUsers(searchId);
+    fetchUsers(searchName);
   }
 
-  async function fetchUsers(userId) {
+  async function fetchUsers(movieName) {
     const { data } = await axios.get(
-      `https://www.omdbapi.com/?i=tt3896198&apikey=8e3ddd4c&s=${userId || id}`
+      // "https://www.omdbapi.com/?i=tt3896198&apikey=8e3ddd4c&s=fast"
+      `https://www.omdbapi.com/?i=tt3896198&apikey=8e3ddd4c&s=${
+        movieName || id
+      }`
     );
     setUsers(data.Search);
     console.log(data);
   }
+
   useEffect(() => {
     fetchUsers();
   }, []);
@@ -68,8 +72,8 @@ const Browse = () => {
         <div className="search-container-browse bg-orange">
           <form action="" className="bg-orange">
             <input
-              value={searchId}
-              onChange={(event) => setSearchId(event.target.value)}
+              value={searchName}
+              onChange={(event) => setSearchName(event.target.value)}
               className="browse-input"
               type="text"
               placeholder="Search thousands of movies..."
