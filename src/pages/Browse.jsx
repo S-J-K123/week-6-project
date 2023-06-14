@@ -7,13 +7,11 @@ import Switch from "../components/Switch";
 import Modal from "../components/Modal";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
 
 const Browse = () => {
   const [showModal, setShowModal] = useState(false);
   const [users, setUsers] = useState([]);
-  const { id } = useParams();
-  const [searchName, setSearchName] = useState(id || '');
+  const [searchName, setSearchName] = useState("");
 
   function onSearch() {
     fetchUsers(searchName);
@@ -22,9 +20,7 @@ const Browse = () => {
   async function fetchUsers(movieName) {
     const { data } = await axios.get(
       // "https://www.omdbapi.com/?i=tt3896198&apikey=8e3ddd4c&s=fast"
-      `https://www.omdbapi.com/?i=tt3896198&apikey=8e3ddd4c&s=${
-        movieName || id
-      }`
+      `https://www.omdbapi.com/?i=tt3896198&apikey=8e3ddd4c&s=${movieName}`
     );
     setUsers(data.Search);
     console.log(data);
