@@ -20,7 +20,7 @@ const Browse = () => {
   async function fetchUsers(movieName) {
     const { data } = await axios.get(
       // "https://www.omdbapi.com/?i=tt3896198&apikey=8e3ddd4c&s=fast"
-      `https://www.omdbapi.com/?i=tt3896198&apikey=8e3ddd4c&s=${movieName}`
+      `https://www.omdbapi.com/?i=tt3896198&apikey=8e3ddd4c&s=${movieName || "fast"}`
     );
     setUsers(data.Search);
     console.log(data);
