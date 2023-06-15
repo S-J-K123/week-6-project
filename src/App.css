@@ -249,7 +249,8 @@ input {
   height: 30px;
   background-color: white;
   color: #f95738;
-  margin-right: -79px;
+  margin-right: -27px;
+  margin-bottom: -5px;
 }
 
 .browse-input {
@@ -259,6 +260,8 @@ input {
   padding-left: 24px;
   font-size: 20px;
   background-color: white;
+  margin-left: -40px;
+  border: none;
 }
 
 .user-list {
@@ -390,3 +393,15 @@ input:checked + .slider:before {
   width: 300px;
   height: 3px;
 }
+
+
+
+/* @media(max-width: 841px) {
+  .bg_color{
+    display: inline-block;
+  }
+  } */
+
+
+
+ 

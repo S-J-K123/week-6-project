@@ -13,8 +13,10 @@ const Browse = () => {
   const [users, setUsers] = useState([]);
   const [searchName, setSearchName] = useState("");
 
-  function onSearch() {
+  function onSearch(event) {
+    event.preventDefault();
     fetchUsers(searchName);
+    console.log(searchName)
   }
 
   async function fetchUsers(movieName) {
@@ -27,8 +29,13 @@ const Browse = () => {
   }
 
   useEffect(() => {
-    fetchUsers();
+    const searchParams = new URLSearchParams(window.location.search);
+    const movieName = searchParams.get("search");
+    fetchUsers(movieName);
   }, []);
+  
+
+
 
   return (
     <div>
@@ -66,7 +73,7 @@ const Browse = () => {
         <h1 className="bm bg-orange">Browse Our Movies</h1>
 
         <div className="search-container-browse bg-orange">
-          <form action="" className="bg-orange">
+        <form onSubmit={onSearch} className="bg-orange">
             <input
               value={searchName}
               onChange={(event) => setSearchName(event.target.value)}
@@ -75,8 +82,8 @@ const Browse = () => {
               placeholder="Search thousands of movies..."
               name="Search"
             />
-            <button onClick={() => onSearch()} className="button-browse">
-              <FontAwesomeIcon
+            <button  className="button-browse">
+            <FontAwesomeIcon
                 className="magnify-browse"
                 icon={faMagnifyingGlass}
               />
@@ -98,6 +105,7 @@ const Browse = () => {
 
       {users.map((user, id) => {
         return (
+          
           <div className="row" key={id}>
             <div className="user-list">
               <div className="user">

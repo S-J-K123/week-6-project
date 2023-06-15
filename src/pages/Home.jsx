@@ -3,8 +3,24 @@ import {
   faMagnifyingGlass,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useState } from "react";
+import { navigate, useNavigate } from "react-router-dom";
 
 const Home = () => {
+ let navigate = useNavigate()
+const [searchName, setSearchName] = useState("")
+
+
+
+
+
+function onSearch() {
+navigate(`/browse?search=${searchName}`)
+  console.log(searchName)
+}
+
+
+
   return (
     <div>
       <section className="home-page">
@@ -40,13 +56,15 @@ const Home = () => {
         </h2>
 
         <div className="search-container">
-          <form action="">
-            <input
+          <form action="" onSubmit={onSearch}>
+  
+            <input onChange={(event) => setSearchName(event.target.value)}
+            value={searchName}
               type="text"
               placeholder="Search thousands of movies..."
               name="Search"
             />
-            <button className="button">
+            <button  className="button">
               <FontAwesomeIcon className="magnify" icon={faMagnifyingGlass} />
             </button>
           </form>
