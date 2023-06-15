@@ -28,12 +28,15 @@ const Browse = () => {
     console.log(data);
   }
 
-  useEffect(() => {
-    const searchParams = new URLSearchParams(window.location.search);
-    const movieName = searchParams.get("search");
-    fetchUsers(movieName);
-  }, []);
-  
+
+
+  // fixing code
+//   useEffect(() => {
+//   const searchParams = new URLSearchParams(window.location.search);
+//   const movieName = searchParams.get("search");
+//   fetchUsers(movieName);
+// }, []);
+
 
 
 

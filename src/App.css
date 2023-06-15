@@ -396,12 +396,151 @@ input:checked + .slider:before {
 
 
 
-/* @media(max-width: 841px) {
-  .bg_color{
-    display: inline-block;
+
+@media(max-width: 946px){
+  .lists{
+    font-size: 15px;
+    /* display: flex;
+    justify-content: center;
+    align-items: center; */
   }
-  } */
+}
 
 
+
+@media(max-width: 862px){
+ .lists{
+  font-size: 10px;
+ }
+  
+  }
+
+  @media(max-width: 776px){
+    .logo{
+     font-size: 10px;
+    }
+     
+     }
+      
+
+
+
+@media(max-width: 697px){
+  ul{
+    display: grid;
+    justify-content: center;
+    align-items: center;
+  }
+  nav {
+    height: 70px;
+    display: flex;
+    flex-direction: column; 
+    align-items: center;
+    padding: 48px 180px;
+  }
+  
+  ul {
+    display: flex;
+    flex-direction: column; 
+    align-items: center; 
+    margin-top: 20px; 
+  }
+
+  .lists{
+    margin-bottom: 20px;
+  }
+}
+
+
+
+
+@media(max-width: 700px){
+  .big-text{
+   font-size: 30px;
+   margin-top: 150px;
+  }
+   
+   }
+    
 
  
+
+   @media(max-width: 700px){
+    .logo{
+     font-size: 30px;
+    }
+    .lists{
+      font-size: 20px;
+    }
+     
+     }
+
+
+     @media(max-width: 570px){
+     .fav{
+      font-size: 18px;
+     }
+      }
+
+
+
+
+
+      
+     @media(max-width: 480px){
+      .fav{
+       font-size: 12px;
+      }
+       }
+
+
+
+       @media(max-width: 545px){
+        .lists{
+         font-size: 12px;
+        }
+         }
+ 
+
+
+         @media(max-width: 482px){
+          .lists{
+           font-size: 8px;
+          }
+           }
+
+
+           
+         @media(max-width: 451px){
+          .lists{
+           font-size: 5px;
+          }
+           }
+
+      
+       
+           @media(max-width: 687px){
+            input{
+             width: 400px;
+            }
+             }
+
+             @media(max-width: 670px){
+              input{
+               width: 370px;
+              }
+               }
+
+               @media(max-width: 490px){
+                input{
+                 width: 250px;
+                }
+
+                 }
+
+
+                 @media (max-width: 490px) {
+                  input[type="text"]::placeholder {
+                    color: transparent;
+                  }
+                }
