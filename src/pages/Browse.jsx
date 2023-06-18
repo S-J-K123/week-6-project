@@ -13,10 +13,11 @@ const Browse = () => {
   const [showModal, setShowModal] = useState(false);
   const [users, setUsers] = useState([]);
   const [searchName, setSearchName] = useState("");
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   function onSearch(event) {
     event.preventDefault();
+    setLoading(true)
     fetchUsers(searchName);
     console.log(searchName);
   }
@@ -34,7 +35,7 @@ const Browse = () => {
     setUsers(data.Search);
     setTimeout(() => {
       setLoading(false);
-    }, 2000);
+    }, 1500);
     console.log(data);
   }
 
@@ -114,35 +115,37 @@ const Browse = () => {
 
       {showModal ? <Modal /> : null}
 
-      {users.map((user, id) => {
+      {users && users.map((user, id) => {
         return (
           <div className="row" key={id}>
             <div className="user-list">
-              {
-                loading 
-                ? (
-                  <Skeleton width={'400px'}
-                  height={'400px'}/>
-                ) : (
+             
                   <div className="user">
-                  <div className="user-card">
-                    <div className="user-card__container">
-                      <img className="images" src={user.Poster} alt="" />{" "}
-                      <p>
-                        Title: <b>{user.Title}</b>{" "}
-                      </p>
-                      <p>
-                        Type: <b>{user.Type}</b>
-                      </p>
-                      <p>
-                        Year: <b>{user.Year}</b>
-                      </p>
-                    </div>
-                  </div>
+                    {
+                      loading
+                      ? (
+                        <Skeleton width={'300px'} height={'300px'}/>
+                      ) :
+                      (
+                        <div className="user-card">
+                        <div className="user-card__container">
+                          <img className="images" src={user.Poster} alt="" />{" "}
+                          <p>
+                            Title: <b>{user.Title}</b>{" "}
+                          </p>
+                          <p>
+                            Type: <b>{user.Type}</b>
+                          </p>
+                          <p>
+                            Year: <b>{user.Year}</b>
+                          </p>
+                        </div>
+                      </div>
+                      )
+                    }
+                
                 </div>
-                )
-              }
-           
+             
             </div>
           </div>
         );
