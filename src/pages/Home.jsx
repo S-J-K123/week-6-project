@@ -58,7 +58,7 @@ navigate(`/browse?search=${searchName}`)
         <div className="search-container">
           <form action="" onSubmit={onSearch}>
   
-            <input onChange={(event) => setSearchName(event.target.value)}
+            <input className="home-input" onChange={(event) => setSearchName(event.target.value)}
             value={searchName}
               type="text"
               placeholder="Search thousands of movies..."

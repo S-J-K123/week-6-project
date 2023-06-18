@@ -20,9 +20,14 @@ const Browse = () => {
   }
 
   async function fetchUsers(movieName) {
+    if(!movieName) {
+      setUsers([])
+      return
+    }
+    
     const { data } = await axios.get(
       // "https://www.omdbapi.com/?i=tt3896198&apikey=8e3ddd4c&s=fast"
-      `https://www.omdbapi.com/?i=tt3896198&apikey=8e3ddd4c&s=${movieName || "fast"}`
+      `https://www.omdbapi.com/?i=tt3896198&apikey=8e3ddd4c&s=${movieName}`
     );
     setUsers(data.Search);
     console.log(data);
@@ -31,17 +36,18 @@ const Browse = () => {
 
 
   // fixing code
-//   useEffect(() => {
-//   const searchParams = new URLSearchParams(window.location.search);
-//   const movieName = searchParams.get("search");
-//   fetchUsers(movieName);
-// }, []);
+  useEffect(() => {
+  const searchParams = new URLSearchParams(window.location.search);
+  const movieName = searchParams.get("search");
+  fetchUsers(movieName);
+}, []);
 
 
 
 
   return (
     <div>
+      <div className="browse-background-color">
       <section className="bg-orange">
         <nav className="bg-orange">
           <a href="/">
@@ -94,6 +100,10 @@ const Browse = () => {
           </form>
         </div>
       </section>
+      </div>
+  
+
+ {/* changed from swich-btn to switch-input */}
 
       <section className="btm-half">
         <h2 className="search-results">Search results</h2>
