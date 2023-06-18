@@ -13,11 +13,11 @@ const Browse = () => {
   const [showModal, setShowModal] = useState(false);
   const [users, setUsers] = useState([]);
   const [searchName, setSearchName] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   function onSearch(event) {
     event.preventDefault();
-    setLoading(true)
+    setLoading(false)
     fetchUsers(searchName);
     console.log(searchName);
   }
