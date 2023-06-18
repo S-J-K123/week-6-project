@@ -23,6 +23,7 @@ const Browse = () => {
   }
 
   async function fetchUsers(movieName) {
+    setLoading(true)
     if (!movieName) {
       setUsers([]);
       return;
