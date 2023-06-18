@@ -252,7 +252,7 @@ a {
 
 .browse-input {
   width: 620px;
-  height: 58px;
+  height: 62px;
   border-radius: 50px;
   padding-left: 24px;
   font-size: 20px;
@@ -631,3 +631,23 @@ margin-left: -111px;
     width: 70%;
   }
     }
+
+
+    
+
+    @media (max-width: 697px) {
+   .fav-title{
+    margin-top: 190px;
+    margin-left: 124px;
+   }
+        }
+    
+
+            
+
+    @media (max-width: 691px) {
+      .fav-title{
+    display: none;
+      }
+           }
+       
