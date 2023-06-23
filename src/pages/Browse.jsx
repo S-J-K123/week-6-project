@@ -8,43 +8,104 @@ import Modal from "../components/Modal";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Skeleton from "../UI/Skeleton";
+import Pagination from "../components/Pagination";
+import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 const Browse = () => {
   const [showModal, setShowModal] = useState(false);
-  const [users, setUsers] = useState([]);
+  const [movies, setMovies] = useState([]);
   const [searchName, setSearchName] = useState("");
   const [loading, setLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [postsPerPage, setPostsPerPage] = useState(8);
+  const [selectedYear, setSelectedYear] = useState("");
+  const navigate = useNavigate();
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const searchQuery = searchParams.get("search");
 
   function onSearch(event) {
     event.preventDefault();
-    setLoading(false)
-    fetchUsers(searchName);
+    setLoading(false);
+    fetchMovies(searchName);
     console.log(searchName);
   }
 
-  async function fetchUsers(movieName) {
-    setLoading(true)
-    if (!movieName) {
-      setUsers([]);
-      return;
+  console.log(selectedYear);
+
+  async function fetchMovies(movieName) {
+    try {
+      setLoading(true);
+
+      if (!movieName) {
+        setMovies([]);
+        return;
+      }
+
+      const { data } = await axios.get(
+        `https://www.omdbapi.com/?i=tt3896198&apikey=8e3ddd4c&s=${movieName}`
+      );
+
+      setMovies(data.Search);
+      setTimeout(() => {
+        setLoading(false);
+      }, 1000);
+      console.log(data);
+    } catch (error) {
+      alert(error);
     }
-
-    const { data } = await axios.get(
-      `https://www.omdbapi.com/?i=tt3896198&apikey=8e3ddd4c&s=${movieName}`
-    );
-
-    setUsers(data.Search);
-    setTimeout(() => {
-      setLoading(false);
-    }, 1500);
-    console.log(data);
   }
 
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
     const movieName = searchParams.get("search");
-    fetchUsers(movieName);
+    fetchMovies(movieName);
   }, []);
+
+  //  fetching filtered movies
+  async function filterMovies(movieName) {
+    try {
+      setLoading(true);
+
+      if (!movieName) {
+        setLoading(false);
+        return;
+      }
+
+      const { data } = await axios.get(
+        `https://www.omdbapi.com/?i=tt3896198&apikey=8e3ddd4c&s=${movieName}&y=${selectedYear}`
+      );
+
+      setMovies(data.Search);
+      setTimeout(() => {
+        setLoading(false);
+      }, 1000);
+      console.log(data);
+    } catch (error) {
+      alert(error);
+    }
+  }
+
+  // Get current posts
+  let currentMovies = [];
+
+  if (movies && movies.length > 0) {
+    const indexOfLastPost = currentPage * postsPerPage;
+    const indexOfFirstPost = indexOfLastPost - postsPerPage;
+    currentMovies = movies.slice(indexOfFirstPost, indexOfLastPost);
+  }
+
+  // Change page
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+  const navigateToMovieDetails = (id) => {
+    navigate(`/movie/${id}`);
+  };
+
+
+
+
 
   return (
     <div>
@@ -114,45 +175,57 @@ const Browse = () => {
         </button>
       </section>
 
-      {showModal ? <Modal /> : null}
+      {showModal ? (
+        <Modal
+          setSelectedYear={setSelectedYear}
+          selectedYear={selectedYear}
+          filterMovies={filterMovies}
+        />
+      ) : null}
 
-      {users && users.map((user, id) => {
-        return (
-          <div className="row" key={id}>
-            <div className="user-list">
-             
-                  <div className="user">
-                    {
-                      loading
-                      ? (
-                        <Skeleton width={'300px'} height={'300px'}/>
-                      ) :
-                      (
-                        <div className="user-card">
-                        <div className="user-card__container">
-                          <img className="images" src={user.Poster} alt="" />{" "}
-                          <p>
-                            Title: <b>{user.Title}</b>{" "}
-                          </p>
-                          <p>
-                            Type: <b>{user.Type}</b>
-                          </p>
-                          <p>
-                            Year: <b>{user.Year}</b>
-                          </p>
-                        </div>
-                      </div>
-                      )
-                    }
-                
+      <div className="movies">
+        {loading ? (
+          <div>Loading...</div>
+        ) : movies && movies.length > 0 ? (
+          currentMovies.map((movie) => (
+            <div key={movie.imdbID}>
+              <div className="user-list">
+                <div
+                  onClick={() => navigateToMovieDetails(movie.imdbID)}
+                  className="user"
+                >
+                  <div className="user-card">
+                    <div className="user-card__container">
+                      <img className="images" src={movie.Poster} alt="" />
+                      <p>
+                        Title: <b>{movie.Title}</b>
+                      </p>
+                      <p>
+                        Type: <b>{movie.Type}</b>
+                      </p>
+                      <p>
+                        Year: <b>{movie.Year}</b>
+                      </p>
+                    </div>
+                  </div>
                 </div>
-             
+              </div>
             </div>
-          </div>
-        );
-      })}
+          ))
+        ) : (
+          <div>No search results found.</div>
+        )}
+
+        <Pagination
+          postsPerPage={postsPerPage}
+          totalPosts={movies ? movies.length : 0}
+          paginate={paginate}
+          currentPage={currentPage}
+        />
+      </div>
     </div>
   );
 };
 
 export default Browse;
+  
