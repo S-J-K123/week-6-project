@@ -52,15 +52,22 @@ const Browse = () => {
         setLoading(false);
       }, 1000);
       console.log(data);
+      // Store movies in local storage
+      localStorage.setItem("movies", JSON.stringify(data.Search));
     } catch (error) {
       alert(error);
     }
   }
 
   useEffect(() => {
-    const searchParams = new URLSearchParams(window.location.search);
-    const movieName = searchParams.get("search");
-    fetchMovies(movieName);
+    const storedMovies = localStorage.getItem("movies");
+
+    if (storedMovies) {
+      setMovies(JSON.parse(storedMovies));
+      setLoading(false);
+    } else {
+      fetchMovies(searchQuery);
+    }
   }, []);
 
   //  fetching filtered movies
@@ -82,13 +89,15 @@ const Browse = () => {
         setLoading(false);
       }, 1000);
       console.log(data);
+      // Store filtered movies in local storage
+      localStorage.setItem("movies", JSON.stringify(data.Search));
     } catch (error) {
       alert(error);
     }
   }
 
   // Get current posts
-  let currentMovies = [];
+  let currentMovies
 
   if (movies && movies.length > 0) {
     const indexOfLastPost = currentPage * postsPerPage;
@@ -99,9 +108,17 @@ const Browse = () => {
   // Change page
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
+ 
+
+
+  // navigation function
   const navigateToMovieDetails = (id) => {
+    localStorage.setItem('searchTerm', searchName);
     navigate(`/movie/${id}`);
   };
+
+
+// clearing the stored searchTerm
 
 
 
@@ -228,4 +245,3 @@ const Browse = () => {
 };
 
 export default Browse;
-  
