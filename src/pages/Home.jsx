@@ -11,16 +11,16 @@ import "aos/dist/aos.css";
 const Home = () => {
   let navigate = useNavigate();
   const [searchName, setSearchName] = useState("");
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
 
   function onSearch() {
-    setLoading(true)
+    setLoading(true);
     navigate(`/browse?search=${searchName}`);
     console.log(searchName);
-    
   }
 
   useEffect(() => {
+    sessionStorage.removeItem("searchTerm");
     AOS.init();
   }, []);
 

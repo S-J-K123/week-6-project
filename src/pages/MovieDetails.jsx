@@ -40,7 +40,8 @@ function previousPage() {
 
   return (
     <div>
- <button onClick={previousPage}>Go Back</button>
+ <button onClick={() => navigate(`/browse?search=${movie.Title}`)}
+>Go Back</button>
 
       {loading ? (
         <div>Loading...</div>
