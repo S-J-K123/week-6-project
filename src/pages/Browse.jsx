@@ -7,10 +7,8 @@ import Switch from "../components/Switch";
 import Modal from "../components/Modal";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import Skeleton from "../UI/Skeleton";
 import Pagination from "../components/Pagination";
 import { useNavigate } from "react-router-dom";
-import { useLocation } from "react-router-dom";
 
 const Browse = () => {
   const [showModal, setShowModal] = useState(false);
@@ -18,12 +16,9 @@ const Browse = () => {
   const [searchName, setSearchName] = useState("");
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
-  const [postsPerPage, setPostsPerPage] = useState(8);
+  const postsPerPage = 8;
   const [selectedYear, setSelectedYear] = useState("");
   const navigate = useNavigate();
-  const location = useLocation();
-  const searchParams = new URLSearchParams(location.search);
-  const searchQuery = searchParams.get("search");
 
   function onSearch(event) {
     event.preventDefault();
@@ -31,8 +26,6 @@ const Browse = () => {
     fetchMovies(searchName);
     console.log(searchName);
   }
-
-  console.log(selectedYear);
 
   async function fetchMovies(movieName) {
     try {
@@ -52,22 +45,15 @@ const Browse = () => {
         setLoading(false);
       }, 1000);
       console.log(data);
-      // Store movies in local storage
-      localStorage.setItem("movies", JSON.stringify(data.Search));
     } catch (error) {
       alert(error);
     }
   }
 
   useEffect(() => {
-    const storedMovies = localStorage.getItem("movies");
-
-    if (storedMovies) {
-      setMovies(JSON.parse(storedMovies));
-      setLoading(false);
-    } else {
-      fetchMovies(searchQuery);
-    }
+    const searchParams = new URLSearchParams(window.location.search);
+    const movieName = searchParams.get("search");
+    fetchMovies(movieName);
   }, []);
 
   //  fetching filtered movies
@@ -89,15 +75,13 @@ const Browse = () => {
         setLoading(false);
       }, 1000);
       console.log(data);
-      // Store filtered movies in local storage
-      localStorage.setItem("movies", JSON.stringify(data.Search));
     } catch (error) {
       alert(error);
     }
   }
 
   // Get current posts
-  let currentMovies
+  let currentMovies = [];
 
   if (movies && movies.length > 0) {
     const indexOfLastPost = currentPage * postsPerPage;
@@ -108,19 +92,10 @@ const Browse = () => {
   // Change page
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
- 
-
-
-  // navigation function
   const navigateToMovieDetails = (id) => {
     localStorage.setItem('searchTerm', searchName);
     navigate(`/movie/${id}`);
   };
-
-
-// clearing the stored searchTerm
-
-
 
 
 
