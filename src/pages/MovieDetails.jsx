@@ -58,26 +58,26 @@ function previousPage() {
                    <h1 className="movie-title">
               <b>{movie.Title}</b>
             </h1>
-            <p className="plot">
-              Overview: <b>{movie.Plot}</b>
-            </p>
             <p>
-              Year: <b>{movie.Year}</b>
+              <b className="pg">{movie.Rated}</b>    <b className="movie-year">{movie.Year}</b>    <b className="movie-genre">{movie.Genre}</b>    <b>{movie.Runtime}</b>
+            </p>  
+            <p className="metascore-title">
+              Metascore: <b className="metascore">{movie.Metascore}</b>
             </p>
-            <p>
-              Rated: <b>{movie.Rated}</b>
+            <p className="plot-title">
+           <b className="overview">Overview:</b>    <b className="plot">{movie.Plot}</b>
             </p>
-            <p>
-              Released: <b>{movie.Released}</b>
+            <p className="released-title">
+              Released: <b className="released">{movie.Released}</b>
             </p>
-            <p>
-              Metascore: <b>{movie.Metascore}</b>
+            <p className="boxOffice-title">
+              Box Office: <b className="boxOffice">{movie.BoxOffice}</b>
             </p>
-            <p>
-              Box Office: <b>{movie.BoxOffice}</b>
+            <p className="actors-title">
+              Actors: <b className="actors">{movie.Actors}</b>
             </p>
-            <p>
-              Genre: <b>{movie.Genre}</b>
+            <p className="director-title">
+              Director: <b className="director">{movie.Director}</b>
             </p>
               </div>
         

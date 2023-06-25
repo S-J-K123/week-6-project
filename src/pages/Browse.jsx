@@ -190,14 +190,9 @@ const Browse = () => {
                     <div className="user-card__container">
                       <img className="images" src={movie.Poster} alt="" />
                       <p>
-                        Title: <b>{movie.Title}</b>
+                         <b>{movie.Title}</b>
                       </p>
-                      <p>
-                        Type: <b>{movie.Type}</b>
-                      </p>
-                      <p>
-                        Year: <b>{movie.Year}</b>
-                      </p>
+                    
                     </div>
                   </div>
                 </div>
