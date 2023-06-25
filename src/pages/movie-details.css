@@ -156,27 +156,61 @@ p {
 }
 
 
-/*Metascore code*/
-/* background: conic-gradient(rgb(244, 211, 94) 0deg, rgb(244, 211, 94) 243.4deg, rgb(85, 85, 85) 253.4deg);
-    border-radius: 50%;
-    height: 54px;
-    position: absolute;
-    width: 54px;
-    z-index: 3;
+
+
+
+          
+@media (max-width: 930px) {
+ .movie-card__container{
+  display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+margin-top: 50px;
+ }
+  }
+
+           
+@media (max-width: 664px) {
+.movie-img{
+margin:  0 auto;
+}
+  }
+   
+
+
+            
+  @media (max-width: 677px) {
+.back-btn{
+margin-top: 175px;
+font-size: 15px;
+}
+
+  }
+
+
+  @media (max-width: 677px) {
+    .back-btn{
+  margin-left: 188px;
+    }
     
-    and
+      }
 
-    align-items: center;
-    background: #242424;
-    border-radius: 50%;
-    color: #fff;
-    display: flex;
-    justify-content: center;
+
+      
+      @media (max-width: 500px) {
+        .movie-details-container {
+          width: auto;
+          margin-left: 20px;
+          margin-right: 20px;
+        }
+      }
+
+
+      
+  @media (max-width: 400px) {
+    .pg{
+border: none;
+    }
     
-
-
-    and 
-      height: 46px;
-        width: 46px;
-        z-index: 4;
-    */
+      }
