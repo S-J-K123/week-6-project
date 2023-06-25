@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
 import './movie-details.css'
+import Nav from "../components/Nav";
 
 const MovieDetails = () => {
   const [movie, setMovie] = useState({});
@@ -40,22 +41,24 @@ function previousPage() {
 
   return (
     <div>
- <button onClick={() => navigate(`/browse?search=${movie.Title}`)}
->Go Back</button>
+      <Nav/>
+      <button className="back-btn" onClick={() => {
+  const words = movie.Title.split(" ").slice(0, 3).join(" ");
+  navigate(`/browse?search=${words}`);
+}}>Go Back</button>
 
       {loading ? (
         <div>Loading...</div>
       ) : (
-        <div className="user-card">
-          <div className="user-card__container">
-            <img className="images" src={movie.Poster} alt={movie.Title} />
-            <p className="title">
+        <div className="movie-card">
+          <div className="movie-card__container">
+            <img className="movie-img" src={movie.Poster} alt={movie.Title} />
+            <div className="movie-details-container">
+              <div className="movie-details">
+                   <h1 className="movie-title">
               <b>{movie.Title}</b>
-            </p>
-            <p>
-              Type: <b>{movie.Type}</b>
-            </p>
-            <p>
+            </h1>
+            <p className="plot">
               Overview: <b>{movie.Plot}</b>
             </p>
             <p>
@@ -76,9 +79,41 @@ function previousPage() {
             <p>
               Genre: <b>{movie.Genre}</b>
             </p>
+              </div>
+        
+      </div>
           </div>
         </div>
+        
+
       )}
+      {/* <div className="movie-details-container">
+           <h1 className="movie-title">
+              <b>{movie.Title}</b>
+            </h1>
+            <p className="plot">
+              Overview: <b>{movie.Plot}</b>
+            </p>
+            <p>
+              Year: <b>{movie.Year}</b>
+            </p>
+            <p>
+              Rated: <b>{movie.Rated}</b>
+            </p>
+            <p>
+              Released: <b>{movie.Released}</b>
+            </p>
+            <p>
+              Metascore: <b>{movie.Metascore}</b>
+            </p>
+            <p>
+              Box Office: <b>{movie.BoxOffice}</b>
+            </p>
+            <p>
+              Genre: <b>{movie.Genre}</b>
+            </p>
+      </div> */}
+       
     </div>
   );
 };
