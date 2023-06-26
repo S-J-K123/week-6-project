@@ -9,6 +9,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Pagination from "../components/Pagination";
 import { useNavigate } from "react-router-dom";
+import Skeleton from "../UI/Skeleton";
 
 const Browse = () => {
   const [showModal, setShowModal] = useState(false);
@@ -22,16 +23,15 @@ const Browse = () => {
 
   function onSearch(event) {
     event.preventDefault();
-    setLoading(false);
+    setLoading(true);
     fetchMovies(searchName);
     console.log(searchName);
   }
 
   async function fetchMovies(movieName) {
     try {
-      setLoading(true);
-
       if (!movieName) {
+        setLoading(false);
         setMovies([]);
         return;
       }
@@ -73,7 +73,7 @@ const Browse = () => {
       setMovies(data.Search);
       setTimeout(() => {
         setLoading(false);
-      }, 1000);
+      }, 1500);
       console.log(data);
     } catch (error) {
       alert(error);
@@ -93,11 +93,9 @@ const Browse = () => {
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   const navigateToMovieDetails = (id) => {
-    localStorage.setItem('searchTerm', searchName);
+    localStorage.setItem("searchTerm", searchName);
     navigate(`/movie/${id}`);
   };
-
-
 
   return (
     <div>
@@ -156,8 +154,6 @@ const Browse = () => {
         </section>
       </div>
 
-      {/* changed from swich-btn to switch-input */}
-
       <section className="btm-half">
         <h2 className="search-results">Search results</h2>
         <h2 className="filter">Filter by year</h2>
@@ -177,24 +173,41 @@ const Browse = () => {
 
       <div className="movies">
         {loading ? (
-          <div>Loading...</div>
+          // Display skeleton loading state while loading
+          Array.from({ length: postsPerPage }).map((_, index) => (
+            <div key={index}>
+              <div className="film-list">
+                <div className="film">
+                  <Skeleton width={'300px'} height={'300px'} />
+                </div>
+              </div>
+            </div>
+          ))
         ) : movies && movies.length > 0 ? (
+          // Display actual movie cards once data is loaded
           currentMovies.map((movie) => (
             <div key={movie.imdbID}>
-              <div className="user-list">
+              <div className="film-list">
                 <div
                   onClick={() => navigateToMovieDetails(movie.imdbID)}
-                  className="user"
+                  className="film"
                 >
-                  <div className="user-card">
-                    <div className="user-card__container">
-                      <img className="images" src={movie.Poster} alt="" />
-                      <p>
-                         <b>{movie.Title}</b>
-                      </p>
-                    
-                    </div>
-                  </div>
+                  {
+                    loading ? (
+                      // Display skeleton loading state for each movie
+                      <Skeleton width={'300px'} height={'300px'} />
+                    ) : (
+                      // Display actual movie card
+                      <div className="film-card">
+                        <div className="film-card__container">
+                          <img className="images" src={movie.Poster} alt="" />
+                          <p>
+                            <b>{movie.Title}</b>
+                          </p>
+                        </div>
+                      </div>
+                    )
+                  }
                 </div>
               </div>
             </div>
